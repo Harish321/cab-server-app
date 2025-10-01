@@ -119,14 +119,22 @@ class DashboardController {
         'July', 'August', 'September', 'October', 'November', 'December'
       ];
       
+      // Helper function to get date string from date (handles both string and Date object)
+      const getDateString = (date) => {
+        if (typeof date === 'string') {
+          return date.split('T')[0]; // If already a string, extract date part
+        }
+        return date.toISOString().split('T')[0]; // If Date object, convert to string
+      };
+      
       // Create a map for easy lookup by date string
-      const tripsMap = new Map(data.trips.map(t => [t.date.toISOString().split('T')[0], t]));
-      const expensesMap = new Map(data.expenses.map(e => [e.date.toISOString().split('T')[0], e]));
+      const tripsMap = new Map(data.trips.map(t => [getDateString(t.date), t]));
+      const expensesMap = new Map(data.expenses.map(e => [getDateString(e.date), e]));
       
       // Get all unique dates (only from trips and expenses)
       const allDates = new Set([
-        ...data.trips.map(t => t.date.toISOString().split('T')[0]),
-        ...data.expenses.map(e => e.date.toISOString().split('T')[0])
+        ...data.trips.map(t => getDateString(t.date)),
+        ...data.expenses.map(e => getDateString(e.date))
       ]);
       
       // Convert to array and sort in descending order

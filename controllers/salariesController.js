@@ -2,12 +2,14 @@ const SalariesModel = require('../models/salariesModel');
 const pool = require('../db');
 
 class SalariesController {
-  // Get salary by cab number and date
+  // Get salary by service number and date
   static async get(req, res) {
     try {
-      const { date, cab_number } = req.query;
+      const { date, service_number, cab_number } = req.query;
+      // Accept both cab_number and service_number for backward compatibility
+      const cabServiceNumber = service_number || cab_number;
 
-      if (!date || !cab_number) {
+      if (!date || !cabServiceNumber) {
         return res.status(400).json({ 
           error: 'date and cab_number are required parameters' 
         });
@@ -16,7 +18,7 @@ class SalariesController {
       // Get cab_id from service_number
       const [cabs] = await pool.query(
         'SELECT id FROM cabs WHERE service_number = ?',
-        [cab_number]
+        [cabServiceNumber]
       );
 
       if (cabs.length === 0) {
@@ -41,9 +43,11 @@ class SalariesController {
   // Create or update salary
   static async post(req, res) {
     try {
-      const { id, cab_number, amount, paid_by, date, created_by, updated_by } = req.body;
+      const { id, service_number, cab_number, amount, paid_by, date, created_by, updated_by } = req.body;
+      // Accept both cab_number and service_number for backward compatibility
+      const cabServiceNumber = service_number || cab_number;
 
-      if (!cab_number || !date || !amount) {
+      if (!cabServiceNumber || !date || !amount) {
         return res.status(400).json({ 
           error: 'cab_number, date, and amount are required' 
         });
@@ -52,7 +56,7 @@ class SalariesController {
       // Get cab_id from service_number
       const [cabs] = await pool.query(
         'SELECT id FROM cabs WHERE service_number = ?',
-        [cab_number]
+        [cabServiceNumber]
       );
 
       if (cabs.length === 0) {

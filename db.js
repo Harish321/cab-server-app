@@ -9,6 +9,8 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  timezone: "+05:30", // IST timezone
+  dateStrings: true, // Return dates as strings to avoid automatic conversion
 });
 
 module.exports = pool;
