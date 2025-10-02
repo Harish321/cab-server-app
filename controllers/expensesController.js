@@ -69,7 +69,7 @@ class ExpensesController {
         // Update existing expense
         const expenseData = {
           amount,
-          category: category || 'expense',
+          category: category || 'expenses',
           subtype,
           comments,
           paid_by,
@@ -82,7 +82,7 @@ class ExpensesController {
         const expenseData = {
           cab_id: cabId,
           amount,
-          category: category || 'expense',
+          category: category || 'expenses',
           subtype,
           comments,
           paid_by,

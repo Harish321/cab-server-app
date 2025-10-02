@@ -11,7 +11,7 @@ const DashboardController = require('../controllers/dashboardController');
 /**
  * Unified GET API
  * Query params: date, cab_number, category
- * Category can be: 'trips', 'expense', 'payments', 'salaries'
+ * Category can be: 'trips', 'expenses', 'payments', 'salaries'
  * Returns existing record or empty template with all keys
  */
 router.get('/cab-data', async (req, res) => {
@@ -20,7 +20,7 @@ router.get('/cab-data', async (req, res) => {
 
     if (!category) {
       return res.status(400).json({ 
-        error: 'category parameter is required. Valid values: trips, expense, payments, salaries' 
+        error: 'category parameter is required. Valid values: trips, expenses, payments, salaries' 
       });
     }
 
@@ -28,7 +28,7 @@ router.get('/cab-data', async (req, res) => {
       case 'trips':
         return await TripsController.get(req, res);
       
-      case 'expense':
+      case 'expenses':
         return await ExpensesController.get(req, res);
       
       case 'payments':
@@ -39,7 +39,7 @@ router.get('/cab-data', async (req, res) => {
       
       default:
         return res.status(400).json({ 
-          error: 'Invalid category. Valid values: trips, expense, payments, salaries' 
+          error: 'Invalid category. Valid values: trips, expenses, payments, salaries' 
         });
     }
   } catch (error) {
@@ -51,7 +51,7 @@ router.get('/cab-data', async (req, res) => {
 /**
  * Unified POST API
  * Body should contain: category, and other relevant fields
- * Category can be: 'trips', 'expense', 'payments', 'salaries'
+ * Category can be: 'trips', 'expenses', 'payments', 'salaries'
  * If id is present, updates the record; otherwise creates new record
  */
 router.post('/cab-data', async (req, res) => {
@@ -60,7 +60,7 @@ router.post('/cab-data', async (req, res) => {
 
     if (!category) {
       return res.status(400).json({ 
-        error: 'category field is required in body. Valid values: trips, expense, payments, salaries' 
+        error: 'category field is required in body. Valid values: trips, expenses, payments, salaries' 
       });
     }
 
@@ -68,7 +68,7 @@ router.post('/cab-data', async (req, res) => {
       case 'trips':
         return await TripsController.post(req, res);
       
-      case 'expense':
+      case 'expenses':
         return await ExpensesController.post(req, res);
       
       case 'payments':
@@ -79,7 +79,7 @@ router.post('/cab-data', async (req, res) => {
       
       default:
         return res.status(400).json({ 
-          error: 'Invalid category. Valid values: trips, expense, payments, salaries' 
+          error: 'Invalid category. Valid values: trips, expenses, payments, salaries' 
         });
     }
   } catch (error) {
