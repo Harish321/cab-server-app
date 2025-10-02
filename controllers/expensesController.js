@@ -43,7 +43,7 @@ class ExpensesController {
   // Create or update expense (fuel)
   static async post(req, res) {
     try {
-      const { id, service_number, cab_number, amount, category, subtype, comments, paid_by, date, created_by, updated_by } = req.body;
+      const { id, service_number, cab_number, amount, type, subtype, comments, paid_by, date, created_by, updated_by } = req.body;
       // Accept both cab_number and service_number for backward compatibility
       const cabServiceNumber = service_number || cab_number;
 
@@ -69,7 +69,7 @@ class ExpensesController {
         // Update existing expense
         const expenseData = {
           amount,
-          category: category || 'expenses',
+          type: type || 'fuel',
           subtype,
           comments,
           paid_by,
@@ -82,7 +82,7 @@ class ExpensesController {
         const expenseData = {
           cab_id: cabId,
           amount,
-          category: category || 'expenses',
+          type: type || 'fuel',
           subtype,
           comments,
           paid_by,
