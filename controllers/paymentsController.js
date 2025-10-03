@@ -47,7 +47,7 @@ class PaymentsController {
       // Accept both cab_number and service_number for backward compatibility
       const cabServiceNumber = service_number || cab_number;
 
-      if (!cabServiceNumber || !date || !amount) {
+      if (!cabServiceNumber || !date || (amount === undefined || amount === null)) {
         return res.status(400).json({ 
           error: 'cab_number, date, and amount are required' 
         });
